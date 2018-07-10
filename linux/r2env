@@ -1,0 +1,16 @@
+#! /bin/bash
+a=$(which docker | wc -m)
+if [ "$a" -eq "0" ]
+then
+echo "Docker not Installed!"
+exit 1
+fi
+a=$(docker ps -a --format {{.Names}})
+a=($a)
+for i in ${a[*]}
+do
+[[ $i == "r2image" ]] && docker rm "r2image" 1>/dev/null && echo "Recreating Container..." && break
+done
+
+echo "creating container..."
+docker run -it -v $PWD:/home/r2 --name r2image "$@" rick/r2:latest
