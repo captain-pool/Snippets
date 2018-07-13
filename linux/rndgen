@@ -1,0 +1,7 @@
+#! /bin/bash
+if [[ $1 == "i" ]]
+then
+cat /dev/urandom | hexdump | python -c "print eval(\"int(0x\"+''.join(raw_input().split())+')')"
+else
+cat /dev/urandom | hexdump | python -c "print ''.join(raw_input().split())"
+fi
